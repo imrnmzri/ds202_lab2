@@ -1,0 +1,52 @@
+---
+title: "Lab 2 Individual 2"
+author: "Dongming Li"
+date: "9/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Searching for the Best Chocolates
+1. How are the ratings distributed? Create both a histogram and a boxplot and describe them. Don’t forget to mention outliers, if there are any.
+
+```{r}
+choco <- read.csv("https://raw.githubusercontent.com/xdaiISU/ds202materials/master/hwlabs/data/choco.csv") 
+hist(choco$Rating,breaks=5,ylim=c(0,1000))
+boxplot(choco$Rating,horizontal = TRUE)
+```
+    
+    In general, from histogram we can see more than half of chocolate in this dataset is recommended and highly recommended, some of them even Outstanding. From boxplot we can see the interquartile range is between 3.0 to 3.5, this means half of rating data between 3.0 to 3.5 and about three quarters of rating higher or equal than 3.0. There are also some outliers that lower than 2.0, that shows in this dataset, only few of chocolate taste unpleasant.
+
+2. How does the number of ratings depend on the year? Draw a bar chart of the number of reports.
+```{r}
+barplot(table(choco$Date),ylim = c(0,300))
+```
+
+
+3. Do ratings depend on the cacao percentage of a chocolate bar? Create both numerical and graphical summaries, and explain.
+```{r}
+plot(choco$Rating,choco$Cocoa_Percent)
+cor(choco$Rating, choco$Cocoa_Percent)
+```
+    
+    The linear relationship between rating and cocoa percentage may not be clear from this scatter plot, but we do see some effects of cocoa percentage on the taste of chocolate. From the low rating to the high rating, we can see that the cocoa percentage of chocolate tends to be in the range of 60 to 80 percent.In addition, the correlation coefficient between the rating and cocoa percentage shows that the higher the cocoa percentage, the more negative the rating will be.
+
+
+4. How do different characteristics of the chocolate compare? To elaborate, which characteristics tend to be more favorable and which ones are not? Create both numerical and graphical summaries, and explain.
+
+    
+
+5. Brainstorm two analyses you would like to perform with your teammate. Describe in plain language what comparisons are you making. Create suitable numerical and graphical summaries for your analyses. Describe the results.
+
+    I plan to analyze the relationship between chocolate bean origin and rating together with my teammates to find out the best chocolate bean origin.In addition, the relationship between brands and ratings of all chocolate companies is studied to identify the best chocolate companies.The detailed analysis will be shown in team.Rmd.
+
+
+
+
+
+
+
+
