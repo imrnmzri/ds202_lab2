@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # Searching for the Best Chocolates
 1. How are the ratings distributed? Create both a histogram and a boxplot and describe them. Don’t forget to mention outliers, if there are any.
 
-```{r}
+```{r echo = FALSE}
 choco <- read.csv("https://raw.githubusercontent.com/xdaiISU/ds202materials/master/hwlabs/data/choco.csv") 
 hist(choco$Rating,breaks=5,ylim=c(0,1000))
 boxplot(choco$Rating,horizontal = TRUE)
@@ -21,7 +21,7 @@ boxplot(choco$Rating,horizontal = TRUE)
     In general, from histogram we can see more than half of chocolate in this dataset is recommended and highly recommended, some of them even Outstanding. From boxplot we can see the interquartile range is between 3.0 to 3.5, this means half of rating data between 3.0 to 3.5 and about three quarters of rating higher or equal than 3.0. There are also some outliers that lower than 2.0, that shows in this dataset, only few of chocolate taste unpleasant.
 
 2. How does the number of ratings depend on the year? Draw a bar chart of the number of reports.
-```{r}
+```{r echo = FALSE}
 barplot(table(choco$Date),ylim = c(0,300))
 ```
 
@@ -36,9 +36,104 @@ cor(choco$Rating, choco$Cocoa_Percent)
 
 
 4. How do different characteristics of the chocolate compare? To elaborate, which characteristics tend to be more favorable and which ones are not? Create both numerical and graphical summaries, and explain.
+```{r echo = FALSE}
 
+CREAMY1<-choco[choco$Characteristics1=='creamy',]
+CREAMY2<-choco[choco$Characteristics2=='creamy',]
+CREAMY2<-CREAMY2[rowSums(is.na(CREAMY2))!=ncol(CREAMY2),]
+CREAMY3<-choco[choco$Characteristics3=='creamy',]
+CREAMY3<-CREAMY3[rowSums(is.na(CREAMY3))!=ncol(CREAMY3),]
+AvgCreamy<-(mean(CREAMY1$Rating)+mean(CREAMY2$Rating)+mean(CREAMY3$Rating))/3
+
+SANDY1<-choco[choco$Characteristics1=='sandy',]
+SANDY2<-choco[choco$Characteristics2=='sandy',]
+SANDY2<-SANDY2[rowSums(is.na(SANDY2))!=ncol(SANDY2),]
+SANDY3<-choco[choco$Characteristics3=='sandy',]
+SANDY3<-SANDY3[rowSums(is.na(SANDY3))!=ncol(SANDY3),]
+SANDY4<-choco[choco$Characteristics4=='sandy',]
+SANDY4<-SANDY4[rowSums(is.na(SANDY4))!=ncol(SANDY4),]
+AvgSandy<-(mean(SANDY1$Rating)+mean(SANDY2$Rating)+mean(SANDY3$Rating)+mean(SANDY4$Rating)) / 4
+
+INTENSE1<-choco[choco$Characteristics1=='intense',]
+INTENSE2<-choco[choco$Characteristics2=='intense',]
+INTENSE2<-INTENSE2[rowSums(is.na(INTENSE2))!=ncol(INTENSE2),]
+INTENSE3<-choco[choco$Characteristics3=='intense',]
+INTENSE3<-INTENSE3[rowSums(is.na(INTENSE3))!=ncol(INTENSE3),]
+INTENSE4<-choco[choco$Characteristics4=='intense',]
+INTENSE4<-INTENSE4[rowSums(is.na(INTENSE4))!=ncol(INTENSE4),]
+AvgIntense<-(mean(INTENSE1$Rating)+mean(INTENSE2$Rating)+mean(INTENSE3$Rating)+mean(INTENSE4$Rating))/4
+
+NUTTY1<-choco[choco$Characteristics1=='nutty',]
+NUTTY2<-choco[choco$Characteristics2=='nutty',]
+NUTTY2<-NUTTY2[rowSums(is.na(NUTTY2))!=ncol(NUTTY2),]
+NUTTY3<-choco[choco$Characteristics3=='nutty',]
+NUTTY3<-NUTTY3[rowSums(is.na(NUTTY3))!=ncol(NUTTY3),]
+NUTTY4<-choco[choco$Characteristics4=='nutty',]
+NUTTY4<-NUTTY4[rowSums(is.na(NUTTY4))!=ncol(NUTTY4),]
+AvgNutty<-(mean(NUTTY1$Rating)+mean(NUTTY2$Rating)+mean(NUTTY3$Rating)+mean(NUTTY4$Rating))/4
+
+FATTY1<-choco[choco$Characteristics1=='fatty',]
+FATTY2<-choco[choco$Characteristics2=='fatty',]
+FATTY2<-FATTY2[rowSums(is.na(FATTY2))!=ncol(FATTY2),]
+FATTY3<-choco[choco$Characteristics3=='fatty',]
+FATTY3<-FATTY3[rowSums(is.na(FATTY3))!=ncol(FATTY3),]
+FATTY4<-choco[choco$Characteristics4=='fatty',]
+FATTY4<-FATTY4[rowSums(is.na(FATTY4))!=ncol(FATTY4),]
+AvgFatty<-(mean(FATTY1$Rating)+mean(FATTY2$Rating)+mean(FATTY3$Rating)+mean(FATTY4$Rating))/4
+
+SWEET1<-choco[choco$Characteristics1=='sweet',]
+SWEET2<-choco[choco$Characteristics2=='sweet',]
+SWEET2<-SWEET2[rowSums(is.na(SWEET2))!=ncol(SWEET2),]
+SWEET3<-choco[choco$Characteristics3=='sweet',]
+SWEET3<-SWEET3[rowSums(is.na(SWEET3))!=ncol(SWEET3),]
+SWEET4<-choco[choco$Characteristics4=='sweet',]
+SWEET4<-SWEET4[rowSums(is.na(SWEET4))!=ncol(SWEET4),]
+AvgSweet<-(mean(SWEET1$Rating)+mean(SWEET2$Rating)+mean(SWEET3$Rating)+mean(SWEET4$Rating))/4
+
+STICKY1<-choco[choco$Characteristics1=='sticky',]
+STICKY2<-choco[choco$Characteristics2=='sticky',]
+STICKY2<-STICKY2[rowSums(is.na(STICKY2))!=ncol(STICKY2),]
+STICKY3<-choco[choco$Characteristics3=='sticky',]
+STICKY3<-STICKY3[rowSums(is.na(STICKY3))!=ncol(STICKY3),]
+AvgSticky<-(mean(STICKY1$Rating)+mean(STICKY2$Rating)+mean(STICKY3$Rating))/3
+
+DRY1<-choco[choco$Characteristics1=='dry',]
+DRY2<-choco[choco$Characteristics2=='dry',]
+DRY2<-DRY2[rowSums(is.na(DRY2))!=ncol(DRY2),]
+DRY3<-choco[choco$Characteristics3=='dry',]
+DRY3<-DRY3[rowSums(is.na(DRY3))!=ncol(DRY3),]
+DRY4<-choco[choco$Characteristics4=='dry',]
+DRY4<-DRY4[rowSums(is.na(DRY4))!=ncol(DRY4),]
+AvgDry<-(mean(DRY1$Rating)+mean(DRY2$Rating)+mean(DRY3$Rating)+mean(DRY4$Rating))/4
+
+SPICY1<-choco[choco$Characteristics1=='spicy',]
+SPICY2<-choco[choco$Characteristics2=='spicy',]
+SPICY2<-SPICY2[rowSums(is.na(SPICY2))!=ncol(SPICY2),]
+SPICY3<-choco[choco$Characteristics3=='spicy',]
+SPICY3<-SPICY3[rowSums(is.na(SPICY3))!=ncol(SPICY3),]
+SPICY4<-choco[choco$Characteristics4=='spicy',]
+SPICY4<-SPICY4[rowSums(is.na(SPICY4))!=ncol(SPICY4),]
+AvgSpicy<-(mean(SPICY1$Rating)+mean(SPICY2$Rating)+mean(SPICY3$Rating)+mean(SPICY4$Rating))/4
+
+GRITTY1<-choco[choco$Characteristics1=='gritty',]
+GRITTY2<-choco[choco$Characteristics2=='gritty',]
+GRITTY2<-GRITTY2[rowSums(is.na(GRITTY2))!=ncol(GRITTY2),]
+GRITTY3<-choco[choco$Characteristics3=='gritty',]
+GRITTY3<-GRITTY3[rowSums(is.na(GRITTY3))!=ncol(GRITTY3),]
+GRITTY4<-choco[choco$Characteristics4=='gritty',]
+GRITTY4<-GRITTY4[rowSums(is.na(GRITTY4))!=ncol(GRITTY4),]
+AvgGritty<-(mean(GRITTY1$Rating)+mean(GRITTY2$Rating)+mean(GRITTY3$Rating)+mean(GRITTY4$Rating))/4
+
+Group<-c(AvgCreamy,AvgSandy,AvgIntense,AvgNutty,AvgFatty,AvgSweet,AvgSticky,AvgDry,AvgSpicy,AvgGritty)
+names(Group)<-c('creamy','sandy','intense','nutty','fatty','sweet','sticky','dry','spicy','gritty')
+barplot(Group,ylim = c(0,4.0),las=2)
+```
+```{r echo = FALSE}
+sort(Group,decreasing = TRUE)
+```
     
-
+    I sort the data and select the TOP 10 most popular characteristices of chocolate to analyse. I list the average rating of chocolate which include these characteristices. From the plot and data we can see some characteristices like creamy, nutty ,and sticky are more favorable than others, some characteristices like dry, sweet, and sandy are not as favorable as others.
+    
 5. Brainstorm two analyses you would like to perform with your teammate. Describe in plain language what comparisons are you making. Create suitable numerical and graphical summaries for your analyses. Describe the results.
 
     I plan to analyze the relationship between chocolate bean origin and rating together with my teammates to find out the best chocolate bean origin.In addition, the relationship between brands and ratings of all chocolate companies is studied to identify the best chocolate companies.The detailed analysis will be shown in team.Rmd.
