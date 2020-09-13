@@ -1,6 +1,6 @@
 ---
 title: "Team.Rmd"
-author: "Muhamad Imran Bin Maszeri"
+author: "Muhamad Imran Bin Maszeri and Dongming Li"
 date: "9/8/2020"
 output: html_document
 ---
@@ -9,22 +9,51 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Rating vs. Company
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+    We try to find which companies can make the best chocolate in the world.
+```{r echo=TRUE}
+choco <- read.csv("https://raw.githubusercontent.com/xdaiISU/ds202materials/master/hwlabs/data/choco.csv") 
+COMPANY<-factor(choco$Company)
+lvl1<-levels(COMPANY)
+TYPE1<-reorder(COMPANY,choco$Rating,FUN = mean)
+TYPE1<-sort(TYPE1,decreasing = TRUE)
+TYPE1<-factor(TYPE1,levels(TYPE1)[541:1])
+lvl2<-levels(TYPE1)
+head(lvl2,n=10)
 ```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+    
+    This list is the TOP 10 chocolate companies based on their average rating.
+```{r echo=FALSE}
+TOBAGO<-choco[choco$Company=='Tobago Estate (Pralus)',]
+OCELOT<-choco[choco$Company=='Ocelot',]
+HEIRLOOM<-choco[choco$Company=='Heirloom Cacao Preservation (Zokoko)',]
+MATALE<-choco[choco$Company=='Matale',]
+PATRIC<-choco[choco$Company=='Patric',]
+IDILIO<-choco[choco$Company=='Idilio (Felchlin)',]
+UTOPICK<-choco[choco$Company=='Utopick',]
+DIMANCHE<-choco[choco$Company=='Un Dimanche A Paris',]
+TIMO<-choco[choco$Company=='Timo A. Meyer',]
+OBOLO<-choco[choco$Company=='Obolo',]
+TOBAGO1<-mean(TOBAGO$Rating)
+OCELOT1<-mean(OCELOT$Rating)
+HEIRLOOM1<-mean(HEIRLOOM$Rating)
+MATALE1<-mean(MATALE$Rating)
+PATRIC1<-mean(PATRIC$Rating)
+IDILIO1<-mean(IDILIO$Rating)
+UTOPICK1<-mean(UTOPICK$Rating)
+OBOLO1<-mean(OBOLO$Rating)
+DIMANCHE1<-mean(DIMANCHE$Rating)
+TIMO1<-mean(TIMO$Rating)
+GROUP<-c(TOBAGO1,OCELOT1,HEIRLOOM1,MATALE1,PATRIC1,IDILIO1,UTOPICK1,DIMANCHE1,TIMO1,OBOLO1)
+names(GROUP)<-c('Tobago Estate (Pralus)','Ocelot','Heirloom Cacao Preservation (Zokoko)','Matale','Patric','Idilio (Felchlin)','Utopick','Un Dimanche A Paris','Timo A. Meyer','Obolo')
+barplot(GROUP,ylim = c(0,4.0),las=2)
+GROUP
 ```
+    
+    From the chart and data we can see that the top 10 chocolate companies in the world all have ratings above 3.75. This suggests that chocolate produced from these companies is highly recommended. And in our analysis, we found that these companies did not have many products rated, but as long as the products were rated, the ratings were very high. This shows that these companies pay great attention to the quality of chocolate.
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+
+## Rating vs. Bean origin (Or any other analysis you want do)
