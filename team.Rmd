@@ -9,6 +9,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+5. Brainstorm two analyses you would like to perform with your teammate. Describe in plain language what comparisons are you making. Create suitable numerical and graphical summaries for your analyses. Describe the results.
+
 ## Rating vs. Company
 
     We try to find which companies can make the best chocolate in the world.
@@ -54,6 +56,17 @@ GROUP
     From the chart and data we can see that the top 10 chocolate companies in the world all have ratings above 3.75. This suggests that chocolate produced from these companies is highly recommended. And in our analysis, we found that these companies did not have many products rated, but as long as the products were rated, the ratings were very high. This shows that these companies pay great attention to the quality of chocolate.
 
 
+## Outstanding Rating vs. Location and Bean Origin
+```{r}
+bloc <- choco[(choco$Rating >= 4.0) & (choco$Rating <= 5.0), ]
+btable <- sort(table(bloc$Location), decreasing = TRUE)
+head(btable)
+barplot(head(btable))
 
+bor <- choco[(choco$Rating >= 4.0) & (choco$Rating <= 5.0), ]
+btable2 <- sort(table(bor$Bean_Origin), decreasing = TRUE)
+head(btable2)
+barplot(head(btable2))
+```
 
-## Rating vs. Bean origin (Or any other analysis you want do)
+From this data, it can be concluded that the USA has the highest number of beans that has an "Outstanding" rating, which is 36. Based on the origin of the cocoa bean, it can be concluded that Venezuela has the highest number of beans that have the "Outstanding" rating, which is 18

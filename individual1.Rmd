@@ -17,28 +17,93 @@ str(choco)
 
 1. How are the ratings distributed? Create both a histogram and a boxplot and describe them. Don’t forget to mention outliers, if there are any.
 ```{r}
-hist(choco$Rating)
-boxplot(choco$Rating)
+hist(choco$Rating, main="Frequency of chocolate ratings", xlab="Rating")
+boxplot(choco$Rating, main="Boxplot of Chocolate Ratings", xlab="Rating", horizontal=TRUE)
 ```
+
+Answer: The histogram shows that the graph is left skewed towards "Outstanding" Rating.
+The boxplot shows that the mean of the rating is somewhere between 3.0 and 3.5, which
+shows that the ratings of the chocolates are generally favorable from recommended to
+outstanding. The min of the rating is around 2.0 to 2.5. Ratings that are below 2.0 are generally considered outliers, so there are not many unpleasant chocolates in this graph
 
 2. How does the number of ratings depend on the year? Draw a bar chart of the number of reports.
 ```{r}
-barplot(table(choco$Date))
+barplot(table(choco$Date), main="Number of ratings based on each year", 
+        xlab="Year", ylab="Frequency")
 ```
+
+Answer: As the year progresses, there are more occurences of ratings, with the
+frequency peaked at 2015. Somehow, the number of ratings dropped massively in 2017 before
+rising again
 
 3. Do ratings depend on the cacao percentage of a chocolate bar? Create both numerical and graphical summaries, and explain.
 ```{r}
-boxplot(choco$Rating ~ choco$Cocoa_Percent)
+outs <- choco[(choco$Rating >= 4.0) & (choco$Rating <= 5.0), ]
+highrec <- choco[(choco$Rating >= 3.5) & (choco$Rating <= 3.9), ]
+rec <- choco[(choco$Rating >= 3.0) & (choco$Rating <= 3.49), ]
+dis <- choco[(choco$Rating >= 2.0) & (choco$Rating <= 2.9), ]
+unp <- choco[(choco$Rating >= 1.0) & (choco$Rating <= 1.9), ]
+
+totalmean <- c(mean(outs$Cocoa_Percent), mean(highrec$Cocoa_Percent),
+               mean(rec$Cocoa_Percent), mean(dis$Cocoa_Percent),
+               mean(unp$Cocoa_Percent))
+names(totalmean) <- c("Outs", "HighRec", "Rec",
+                      "Dis", "Unp")
+totalmean
+
 cor(choco$Rating, choco$Cocoa_Percent)
-cov(choco$Rating, choco$Cocoa_Percent)
+
+barplot(totalmean ~ names(totalmean), main="Rating over Percentage",
+        xlab="Rating", ylab="Percentage (%)")
+boxplot(choco$Cocoa_Percent ~ choco$Rating, main="Rating over Percentage",
+        xlab="Rating", ylab="Percentage (%)")
+abline(h=70)
 ```
+
+Answer: Using correlation, it seems that there is somewhat a little to no negative linear
+relationship between ratings and percentage, with the value of -0.1. Next, the barchart
+shows that the "Unpleasant" ranking range has the highest average of percentage, with
+the value of 84.3%. Using boxplot, it can be seen that as the rating increases, the mean value of percentage is closer to 70%.
+
 
 4. How do different characteristics of the chocolate compare? To elaborate, which characteristics tend to be more favorable and which ones are not? Create both numerical and graphical summaries, and explain.
 ```{r}
 
+fav <- choco[(choco$Rating >= 3.0) & (choco$Rating <= 5.0), ]
+ftable <- sort(table(fav$Characteristics1), decreasing = TRUE)
+head(ftable)
+barplot(head(ftable), main="Top Characteristics1 with Ratings from 3.0 to 5.0",
+        xlab="Characteristics1", ylab="Frequency")
+
+fav2 <- choco[(choco$Rating >= 3.0) & (choco$Rating <= 5.0), ]
+ftable2 <- sort(table(fav$Characteristics2), decreasing = TRUE)
+head(ftable2)
+barplot(head(ftable2), main="Top Characteristics2 with Ratings from 3.0 to 5.0",
+        xlab="Characteristics2", ylab="Frequency")
+
+fav3 <- choco[(choco$Rating >= 3.0) & (choco$Rating <= 5.0), ]
+ftable3 <- sort(table(fav$Characteristics3), decreasing = TRUE)
+head(ftable3)
+barplot(head(ftable3), main="Top Characteristics3 with Ratings from 3.0 to 5.0",
+        xlab="Characteristics3", ylab="Frequency")
+
+unfav <- choco[(choco$Rating >= 1.0) & (choco$Rating <= 2.9), ]
+utable <- sort(table(unfav$Characteristics1), decreasing = TRUE)
+head(utable)
+barplot(head(utable), main="Top Characteristics1 with Ratings from 1.0 to 2.9",
+        xlab="Characteristics1", ylab="Frequency")
+
+unfav2 <- choco[(choco$Rating >= 1.0) & (choco$Rating <= 2.9), ]
+utable2 <- sort(table(unfav$Characteristics2), decreasing = TRUE)
+head(utable2)
+barplot(head(utable2), main="Top Characteristics2 with Ratings from 1.0 to 2.9",
+        xlab="Characteristics2", ylab="Frequency")
+
+unfav3 <- choco[(choco$Rating >= 1.0) & (choco$Rating <= 2.9), ]
+utable3 <- sort(table(unfav$Characteristics3), decreasing = TRUE)
+head(utable3)
+barplot(head(utable3), main="Top Characteristics3 with Ratings from 1.0 to 2.9",
+        xlab="Characteristics3", ylab="Frequency")
 ```
 
-5. Brainstorm two analyses you would like to perform with your teammate. Describe in plain language what comparisons are you making. Create suitable numerical and graphical summaries for your analyses. Describe the results.
-```{r}
-
-```
+Answer: The top characteristics from 1 to 3 that are favorable and non-favorable are shown in each of the bar charts. The ideal combination of characteristics that would definitely give a favorable rating are: Creamy, Sweet, and Cocoa. The ideal combination of characteristics that would definitely give a non-favorable rating are: Sandy, Sweet, and Sour.
